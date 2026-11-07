@@ -103,6 +103,40 @@
       .x-reveal.is-in { opacity: 1; transform: none; }
       .head h2 { color: var(--text-primary); }
       .head__eyebrow { color: var(--x-violet); }
+      /* ---------- mobile friendly ---------- */
+      html, body { overflow-x: hidden; }
+      img { max-width: 100%; }
+      .x-projects { grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); }
+      .x-skills { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+      .x-form input, .x-form textarea { font-size: 16px; width: 100%; box-sizing: border-box; }
+      .x-form, .x-cert, .x-group, .x-proj { min-width: 0; }
+      .cards li, .x-proj p, .prose p { overflow-wrap: anywhere; }
+      @media (max-width: 760px) {
+        .x-about { gap: 24px; text-align: left; }
+        .x-photo { width: min(220px, 70%); }
+        .x-about .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+        .x-cert { flex-direction: column; align-items: stretch; padding: 18px; }
+        .x-cert__thumb { width: 100%; }
+      }
+      @media (max-width: 599px) {
+        .hero { min-height: auto; }
+        .hero h1 { font-size: clamp(34px, 10vw, 44px); line-height: 1.1; }
+        .x-type { font-size: 17px; min-height: 2.6em; }
+        .hero .links, .x-proj .links { display: flex; flex-wrap: wrap; gap: 10px; }
+        .hero .links .btn { flex: 1 1 calc(50% - 10px); justify-content: center; }
+        .x-proj .links .btn { flex: 1 1 auto; justify-content: center; }
+        .x-proj, .x-group, .x-form { padding: 18px; }
+        .x-proj h3 { font-size: 19px; }
+        .x-form button { justify-self: stretch; width: 100%; justify-content: center; }
+        .x-math span { font-size: 28px !important; opacity: 0.08; }
+        .x-top { right: 14px; bottom: 14px; }
+        .head h2 { font-size: clamp(24px, 7vw, 30px); line-height: 1.2; }
+        .stat__fig { font-size: 26px; }
+        .stat__label { font-size: 12px; }
+        .foot { flex-direction: column; align-items: flex-start; text-align: left; }
+        .foot nav { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+      }
+      @media (hover: none) { .x-proj { transform: none !important; } }
       @media (prefers-reduced-motion: reduce) {
         .x-math span, .x-photo, .x-type::after { animation: none; }
         .x-reveal, .timeline li { opacity: 1; transform: none; transition: none; }
@@ -216,7 +250,7 @@
             </article>
             <article class="x-proj" data-repo="student-management-system">
               <div class="x-proj__icon" aria-hidden="true">▦</div>
-              <h3>Student Dashboard – Student Management System</h3>
+              <h3>Student Management System</h3>
               <p>Full stack app to add, edit, delete and search students, track attendance and marks with auto grades, course charts and CSV export.</p>
               <ul class="x-tags"><li>React.js</li><li>Tailwind CSS</li><li>Node.js</li><li>Express</li><li>HTML</li><li>JavaScript</li></ul>
               <div class="links">
@@ -354,7 +388,7 @@
 
         // Tilt on project cards
         function tilt(card) {
-          if (reduce) return;
+          if (reduce || window.matchMedia("(hover: none)").matches) return;
           card.addEventListener("pointermove", function (e) {
             var b = card.getBoundingClientRect();
             var x = (e.clientX - b.left) / b.width - 0.5, y = (e.clientY - b.top) / b.height - 0.5;
@@ -375,7 +409,7 @@
               if (!Array.isArray(repos)) return;
               var shown = Array.prototype.map.call(grid.querySelectorAll("[data-repo]"), function (el) { return el.dataset.repo.toLowerCase(); });
               repos.forEach(function (repo) {
-                if (!repo || repo.fork || shown.indexOf(String(repo.name).toLowerCase()) > -1) return;
+                if (!repo || repo.fork || ["student-dashboard"].indexOf(String(repo.name).toLowerCase()) > -1 || shown.indexOf(String(repo.name).toLowerCase()) > -1) return;
                 var card = document.createElement("article");
                 card.className = "x-proj";
                 card.dataset.repo = repo.name;
