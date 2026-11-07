@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yashwant Jaiswal Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <style>
+      :root {
+        --x-violet: light-dark(#6d28d9, #a78bfa);
+        --x-cyan: light-dark(#155e75, #22d3ee);
+        --x-glow: light-dark(rgb(109 40 217 / 0.18), rgb(167 139 250 / 0.35));
+        --x-glow-cyan: light-dark(rgb(14 116 144 / 0.16), rgb(34 211 238 / 0.3));
+        --x-grad: linear-gradient(90deg, var(--x-violet), var(--x-cyan));
+      }
+      /* floating math symbols */
+      .x-math { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+      .x-math span { position: absolute; bottom: -60px; font: var(--weight-light) 44px/1 var(--sans); color: var(--x-violet); opacity: 0.12; animation: x-float 26s linear infinite; }
+      .x-math span:nth-child(even) { color: var(--x-cyan); }
+      @keyframes x-float { to { transform: translateY(-115vh) rotate(200deg); } }
+      .page { position: relative; z-index: 1; }
+      /* hero */
+      .hero { min-height: clamp(460px, 72vh, 640px); }
+      .hero::after { background: linear-gradient(to top, rgb(10 6 30 / 0.9) 0%, rgb(10 6 30 / 0.5) 55%, rgb(10 6 30 / 0.25) 100%), linear-gradient(to right, rgb(10 6 30 / 0.55) 0%, transparent 65%); }
+      .x-type { display: block; min-height: 1.3em; font: var(--type-lede); color: #a5f3fc; margin-top: 8px; }
+      .x-type::after { content: ""; display: inline-block; width: 2px; height: 1em; margin-left: 3px; vertical-align: -0.12em; background: #22d3ee; animation: x-blink 1s steps(1) infinite; }
+      @keyframes x-blink { 50% { opacity: 0; } }
+      .hero .links { margin-top: 20px; }
+      .hero .btn { color: var(--hero-text); border-color: var(--hero-glass-stroke); background: var(--hero-glass); }
+      .hero .btn.x-primary { background: linear-gradient(90deg, #7c3aed, #0891b2); border-color: transparent; box-shadow: 0 0 24px rgb(124 58 237 / 0.5); }
+      /* about */
+      .x-about { display: grid; gap: 32px; align-items: center; }
+      @media (min-width: 760px) { .x-about { grid-template-columns: 280px 1fr; } }
+      .x-photo { position: relative; width: min(280px, 80%); margin: 0 auto; border-radius: var(--r-xl); padding: 3px; background: var(--x-grad); box-shadow: 0 0 40px var(--x-glow), 0 0 80px var(--x-glow-cyan); animation: x-pulse 5s ease-in-out infinite; }
+      .x-photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: calc(var(--r-xl) - 3px); }
+      @keyframes x-pulse { 50% { box-shadow: 0 0 60px var(--x-glow-cyan), 0 0 100px var(--x-glow); } }
+      .x-about .stats { margin-top: 24px; }
+      .stat__fig { color: var(--x-violet); }
+      /* skills */
+      .x-skills { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+      .x-group { background: var(--fill-tertiary); border-radius: var(--r-l); padding: 20px; border: 1px solid var(--stroke-secondary); }
+      .x-group h3 { font: var(--type-heading); margin: 0 0 16px; }
+      .x-skill { margin-bottom: 14px; }
+      .x-skill:last-child { margin-bottom: 0; }
+      .x-skill__top { display: flex; justify-content: space-between; gap: 8px; font: var(--type-label); }
+      .x-skill__top small { font: var(--type-tag); color: var(--text-secondary); }
+      .x-skill__top small span { font: var(--type-caption); }
+      .x-bar { height: 6px; margin-top: 6px; border-radius: var(--r-pill); background: var(--stroke-primary); overflow: hidden; }
+      .x-bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--x-grad); box-shadow: 0 0 12px var(--x-glow-cyan); transition: width 1.4s var(--ease-out); }
+      .is-in .x-bar i { width: var(--w); }
+      /* projects */
+      .x-projects { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+      .x-proj { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 24px; border-radius: var(--r-l); background: var(--fill-tertiary); border: 1px solid var(--stroke-primary); transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform var(--dur-quick) var(--ease-out), box-shadow 300ms var(--ease-out), border-color 300ms; }
+      .x-proj:hover { border-color: var(--x-violet); box-shadow: 0 0 0 1px var(--x-violet), 0 12px 48px var(--x-glow), 0 0 60px var(--x-glow-cyan); }
+      .x-proj h3 { font: var(--type-heading); margin: 0; }
+      .x-proj p { font: var(--type-body); color: var(--text-secondary); margin: 0; }
+      .x-proj__icon { width: 44px; height: 44px; border-radius: var(--r-s); display: grid; place-items: center; background: #5b21b6; color: #fff; font: var(--type-heading); }
+      .x-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding: 0; list-style: none; }
+      .x-tags li { font: var(--type-tag); padding: 4px 10px; border-radius: var(--r-pill); color: var(--x-cyan); border: 1px solid var(--x-glow-cyan); }
+      .x-proj .links { margin: 0; }
+      .x-more { margin-top: 24px; }
+      /* timeline reveal */
+      .timeline li { opacity: 0; transform: translateX(-24px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+      .timeline.is-in li { opacity: 1; transform: none; }
+      .timeline.is-in li:nth-child(2) { transition-delay: 150ms; }
+      .timeline.is-in li:nth-child(3) { transition-delay: 300ms; }
+      /* certificate */
+      .x-cert { display: flex; gap: 20px; align-items: center; padding: 24px; border-radius: var(--r-l); background: var(--fill-tertiary); border: 1px solid var(--stroke-primary); max-width: 640px; }
+      .x-cert { flex-wrap: wrap; max-width: 760px; }
+      .x-cert > div { flex: 1 1 260px; min-width: 0; display: grid; gap: 6px; }
+      .x-cert__thumb { flex: none; width: 200px; max-width: 100%; padding: 0; border: 1px solid var(--stroke-primary); border-radius: var(--r-s); overflow: hidden; background: none; cursor: zoom-in; box-shadow: 0 0 24px var(--x-glow); transition: transform var(--dur-quick) var(--ease-out), box-shadow 300ms; }
+      .x-cert__thumb:hover, .x-cert__thumb:focus-visible { transform: scale(1.03); box-shadow: 0 0 36px var(--x-glow-cyan); }
+      .x-cert__thumb img { display: block; width: 100%; height: auto; }
+      .x-cert h3 { font: var(--type-heading); margin: 0; }
+      .x-cert p { font: var(--type-small); color: var(--text-secondary); margin: 0; }
+      .x-cert__id { font: var(--type-caption) !important; overflow-wrap: anywhere; }
+      .x-lightbox { max-width: min(1100px, 94vw); max-height: 94vh; padding: 12px; border: 1px solid var(--stroke-primary); border-radius: var(--r-l); background: var(--fill-primary-on); box-shadow: var(--hark-shadow); }
+      .x-lightbox::backdrop { background: rgb(0 0 0 / 0.75); backdrop-filter: blur(var(--hark-blur)); }
+      .x-lightbox img { display: block; max-width: 100%; max-height: calc(94vh - 90px); margin: 0 auto; border-radius: var(--r-s); }
+      .x-lightbox__close { display: flex; margin: 0 0 10px auto; min-width: var(--tap); min-height: var(--tap); justify-content: center; align-items: center; cursor: pointer; }
+      /* contact */
+      .x-form { display: grid; gap: 14px; padding: 24px; border-radius: var(--r-l); background: var(--fill-tertiary); border: 1px solid var(--stroke-primary); }
+      .x-form label { display: grid; gap: 6px; font: var(--type-label); }
+      .x-form input, .x-form textarea { font: var(--type-body); color: var(--text-primary); background: var(--fill-primary-on); border: 1px solid var(--stroke-primary); border-radius: var(--r-s); padding: 12px 14px; min-height: var(--tap); transition: border-color var(--dur-quick), box-shadow var(--dur-quick); }
+      .x-form textarea { min-height: 130px; resize: vertical; }
+      .x-form input:focus, .x-form textarea:focus { outline: none; border-color: var(--x-violet); box-shadow: 0 0 0 3px var(--x-glow); }
+      .x-form button { justify-self: start; cursor: pointer; }
+      .x-toast { position: fixed; left: 50%; bottom: 24px; z-index: 50; transform: translate(-50%, 140%); padding: 12px 20px; border-radius: var(--r-pill); font: var(--type-label); color: var(--text-primary-on); background: var(--fill-system-green); box-shadow: var(--hark-shadow); transition: transform 400ms var(--ease-out); }
+      .x-toast.is-error { background: var(--fill-system-red); }
+      .x-toast.is-show { transform: translate(-50%, 0); }
+      /* back to top */
+      .x-top { position: fixed; right: 20px; bottom: 20px; z-index: 40; width: var(--tap); height: var(--tap); border-radius: 50%; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #7c3aed, #0891b2); box-shadow: 0 0 20px var(--x-glow); text-decoration: none; font: var(--type-heading); opacity: 0; transform: translateY(20px); pointer-events: none; transition: opacity 300ms, transform 300ms var(--ease-out); }
+      .x-top.is-show { opacity: 1; transform: none; pointer-events: auto; }
+      /* scroll reveal */
+      .x-reveal { opacity: 0; transform: translateY(28px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+      .x-reveal.is-in { opacity: 1; transform: none; }
+      .head h2 { color: var(--text-primary); }
+      .head__eyebrow { color: var(--x-violet); }
+      @media (prefers-reduced-motion: reduce) {
+        .x-math span, .x-photo, .x-type::after { animation: none; }
+        .x-reveal, .timeline li { opacity: 1; transform: none; transition: none; }
+        .x-bar i { transition: none; }
+        .x-proj { transform: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="x-math" aria-hidden="true">
+      <span style="left:6%;animation-delay:-2s">π</span>
+      <span style="left:18%;animation-delay:-14s;font-size:32px">∑</span>
+      <span style="left:31%;animation-delay:-8s">√</span>
+      <span style="left:44%;animation-delay:-20s;font-size:56px">∫</span>
+      <span style="left:57%;animation-delay:-5s;font-size:30px">π</span>
+      <span style="left:69%;animation-delay:-17s">∑</span>
+      <span style="left:81%;animation-delay:-11s;font-size:36px">√</span>
+      <span style="left:92%;animation-delay:-23s">∫</span>
+    </div>
+    <div class="page" id="top">
+      <header class="nav glass" data-auto></header>
+      <main class="main">
+        <section class="hero">
+          <img class="hero__img" src="portfolio_hero.png" alt="A dark desk with a laptop lit by purple and cyan neon" />
+          <div class="hero__copy">
+            <p class="hero__eyebrow">Portfolio</p>
+            <h1>Yashwant Jaiswal</h1>
+            <span class="x-type" id="typed" aria-label="Full Stack Web Developer, Python &amp; Java Programmer, Math Enthusiast, Data Analytics Learner"></span>
+            <p class="hero__meta">Full Stack Web Developer • BCA Student • Lucknow, India</p>
+            <div class="links">
+              <a class="btn x-primary" href="#projects">View Projects</a>
+              <a class="btn" href="#contact">Contact Me</a>
+              <a class="btn" href="https://github.com/yashwantj730-code" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section x-reveal" id="about" data-nav="About">
+          <div class="head">
+            <p class="head__eyebrow">About me</p>
+            <h2>A developer who thinks in code and maths.</h2>
+          </div>
+          <div class="x-about">
+            <div class="x-photo"><img src="yashwant.jpg" alt="Portrait of Yashwant Jaiswal" /></div>
+            <div>
+              <div class="prose">
+                <p>I'm Yashwant, a BCA 2nd-year student at Integral University, Lucknow, and a full stack web developer who loves building clean, interactive web apps. I code in Python and Java, I'm strong in mathematics, and I enjoy turning ideas like gamified learning into real products. I've also completed CodeWithHarry's Ultimate Job-Ready AI-Powered Data Analytics Course.</p>
+              </div>
+              <section class="stats">
+                <div class="stat"><span class="stat__fig"><span data-count="2">0</span>+</span><span class="stat__label">GitHub projects</span></div>
+                <div class="stat"><span class="stat__fig"><span data-count="1">0</span></span><span class="stat__label">Certification</span></div>
+                <div class="stat"><span class="stat__fig"><span data-count="2">0</span>nd</span><span class="stat__label">Year of BCA</span></div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section class="section x-reveal" id="skills" data-nav="Skills">
+          <div class="head">
+            <p class="head__eyebrow">Skills</p>
+            <h2>From the browser to the database, and the numbers in between.</h2>
+            <p class="head__sub">Levels are self-assessed: Advanced, Intermediate or Learning.</p>
+          </div>
+          <div class="x-skills">
+            <div class="x-group">
+              <h3>Frontend</h3>
+              <div class="x-skill"><div class="x-skill__top">HTML<small>Advanced</small></div><div class="x-bar"><i style="--w:90%"></i></div></div>
+              <div class="x-skill"><div class="x-skill__top">CSS<small>Advanced</small></div><div class="x-bar"><i style="--w:88%"></i></div></div>
+              <div class="x-skill"><div class="x-skill__top">JavaScript<small>Intermediate</small></div><div class="x-bar"><i style="--w:70%"></i></div></div>
+              <div class="x-skill"><div class="x-skill__top">React<small>Intermediate</small></div><div class="x-bar"><i style="--w:65%"></i></div></div>
+              <div class="x-skill"><div class="x-skill__top">Tailwind CSS<small>Intermediate</small></div><div class="x-bar"><i style="--w:68%"></i></div></div>
+            </div>
+            <div class="x-group">
+              <h3>Backend</h3>
+              <div class="x-skill"><div class="x-skill__top">Node.js<small>Intermediate</small></div><div class="x-bar"><i style="--w:62%"></i></div></div>
+              <div class="x-skill"><div class="x-skill__top">Express<small>Intermediate</small></div><div class="x-bar"><i style="--w:60%"></i></div></div>
+              <div class="x-skill"><div class="x-skill__top">REST APIs<small>Intermediate</small></div><div class="x-bar"><i style="--w:65%"></i></div></div>
+            </div>
+            <div class="x-group">
+              <h3>Programming</h3>
+              <div class="x-skill"><div class="x-skill__top">Python<small>Advanced</small></div><div class="x-bar"><i style="--w:85%"></i></div></div>
+              <div class="x-skill"><div class="x-skill__top">Java<small>Intermediate</small></div><div class="x-bar"><i style="--w:68%"></i></div></div>
+            </div>
+            <div class="x-group">
+              <h3>Data</h3>
+              <div class="x-skill"><div class="x-skill__top"><span>Data Analytics <small><span>Python, Pandas, Excel · Ultimate Job-Ready AI-Powered Data Analytics Course, CodeWithHarry</span></small></span><small>Learning</small></div><div class="x-bar"><i style="--w:45%"></i></div></div>
+            </div>
+            <div class="x-group">
+              <h3>Other</h3>
+              <div class="x-skill"><div class="x-skill__top">Mathematics<small>Advanced</small></div><div class="x-bar"><i style="--w:90%"></i></div></div>
+              <div class="x-skill"><div class="x-skill__top">Git &amp; GitHub<small>Intermediate</small></div><div class="x-bar"><i style="--w:70%"></i></div></div>
+              <div class="x-skill"><div class="x-skill__top">Vercel deployment<small>Intermediate</small></div><div class="x-bar"><i style="--w:65%"></i></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section x-reveal" id="projects" data-nav="Projects">
+          <div class="head">
+            <p class="head__eyebrow">Projects</p>
+            <h2>Things I've built and shipped.</h2>
+          </div>
+          <div class="x-projects" id="project-grid">
+            <article class="x-proj" data-repo="mathquest">
+              <div class="x-proj__icon" aria-hidden="true">∑</div>
+              <h3>MathQuest</h3>
+              <p>A gamified mathematics learning platform that makes practice fun with levels, challenges and rewards.</p>
+              <ul class="x-tags"><li>JavaScript</li><li>Web</li><li>Gamification</li></ul>
+              <div class="links">
+                <a class="btn" href="https://github.com/yashwantj730-code/mathquest" target="_blank" rel="noopener">Code</a>
+              </div>
+            </article>
+            <article class="x-proj" data-repo="student-dashboard">
+              <div class="x-proj__icon" aria-hidden="true">▦</div>
+              <h3>Student Dashboard</h3>
+              <p>Modern student dashboard built using React, Tailwind CSS and API integration.</p>
+              <ul class="x-tags"><li>React</li><li>Tailwind CSS</li><li>API</li></ul>
+              <div class="links">
+                <a class="btn" href="https://student-dashboard-rosy-five.vercel.app" target="_blank" rel="noopener">Live Demo</a>
+                <a class="btn" href="https://github.com/yashwantj730-code/student-dashboard" target="_blank" rel="noopener">Code</a>
+              </div>
+            </article>
+          </div>
+          <div class="links x-more">
+            <a class="btn" href="https://github.com/yashwantj730-code?tab=repositories" target="_blank" rel="noopener">See all on GitHub</a>
+          </div>
+        </section>
+
+        <section class="section x-reveal" id="education" data-nav="Education">
+          <div class="head">
+            <p class="head__eyebrow">Education</p>
+            <h2>From Gonda to Lucknow.</h2>
+          </div>
+          <ol class="timeline" id="edu">
+            <li class="is-current">
+              <p class="timeline__when">Now</p>
+              <div class="timeline__what"><strong>BCA (Bachelor of Computer Applications)</strong><br />Integral University, Lucknow · currently in 2nd year</div>
+              <p><span class="chip chip--solid">Pursuing</span></p>
+            </li>
+            <li>
+              <p class="timeline__when">Class 12</p>
+              <div class="timeline__what"><strong>Intermediate</strong><br />Govind Prasad Inter College, Gaura Chhauki, Gonda · UP Board</div>
+            </li>
+            <li>
+              <p class="timeline__when">Class 10</p>
+              <div class="timeline__what"><strong>High School</strong><br />Govind Prasad Inter College, Gaura Chhauki, Gonda · UP Board</div>
+            </li>
+          </ol>
+        </section>
+
+        <section class="section x-reveal" id="certification" data-nav="Certificate">
+          <div class="head">
+            <p class="head__eyebrow">Certification</p>
+            <h2>Learning data, one dataset at a time.</h2>
+          </div>
+          <div class="x-cert">
+            <button class="x-cert__thumb" type="button" id="cert-open" aria-label="View the certificate full size">
+              <img src="certificate.jpg" alt="CodeWithHarry certificate for the Ultimate Job-Ready AI-Powered Data Analytics Course, awarded to Yashwant Jaiswal" />
+            </button>
+            <div>
+              <h3>Ultimate Job-Ready AI-Powered Data Analytics Course</h3>
+              <p>CodeWithHarry · <a class="link" href="https://www.codewithharry.com" target="_blank" rel="noopener">codewithharry.com</a></p>
+              <p>Completed 04/06/2026</p>
+              <p class="x-cert__id">Certificate ID: CWH-THE-ULTIMATE-JOB-READY-AI-POWERED-DATA-ANALYTICS-COURSE-UZ1GSZGS</p>
+            </div>
+          </div>
+          <dialog class="x-lightbox" id="cert-dialog" aria-label="Certificate, full size">
+            <button class="btn x-lightbox__close" type="button" id="cert-close" aria-label="Close">✕</button>
+            <img src="certificate.jpg" alt="CodeWithHarry certificate for the Ultimate Job-Ready AI-Powered Data Analytics Course, full size" />
+          </dialog>
+        </section>
+
+        <section class="section x-reveal" id="contact" data-nav="Contact">
+          <div class="head">
+            <p class="head__eyebrow">Contact</p>
+            <h2>Have a project or a role? Let's talk.</h2>
+          </div>
+          <div class="pair">
+            <form class="x-form" id="contact-form" novalidate>
+              <label>Name<input name="name" type="text" autocomplete="name" required /></label>
+              <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+              <label>Message<textarea name="message" required></textarea></label>
+              <button class="btn" type="submit">Send message</button>
+            </form>
+            <div class="cards">
+              <div>
+                <h3>Reach me</h3>
+                <ul>
+                  <li>Email <a class="link" href="mailto:yashwantj730@gmail.com">yashwantj730@gmail.com</a></li>
+                  <li>GitHub <a class="link" href="https://github.com/yashwantj730-code" target="_blank" rel="noopener">yashwantj730-code</a></li>
+                  <li>Location Lucknow, Uttar Pradesh</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="foot">
+        <p>© 2026 Yashwant Jaiswal • Built with passion and code</p>
+        <nav aria-label="Back to sections" data-auto></nav>
+        <a class="badge" href="https://hark.com/" target="_blank" rel="noopener"><span class="hark-mark"></span><span>built by hark</span></a>
+      </footer>
+    </div>
+    <a class="x-top" id="to-top" href="#top" aria-label="Back to top">↑</a>
+    <div class="x-toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="hark.js"></script>
+    <script>
+      // Set to your deployed backend URL, e.g. https://your-backend.onrender.com
+      const API_URL = "";
+
+      (function () {
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        // Typing effect
+        var roles = ["Full Stack Web Developer", "Python & Java Programmer", "Math Enthusiast", "Data Analytics Learner"];
+        var typed = document.getElementById("typed");
+        if (reduce) { typed.textContent = roles[0]; }
+        else {
+          var r = 0, c = 0, del = false;
+          (function tick() {
+            var word = roles[r];
+            c += del ? -1 : 1;
+            typed.textContent = word.slice(0, c);
+            var wait = del ? 40 : 80;
+            if (!del && c === word.length) { del = true; wait = 1600; }
+            else if (del && c === 0) { del = false; r = (r + 1) % roles.length; wait = 300; }
+            setTimeout(tick, wait);
+          })();
+        }
+
+        // Counters
+        function count(el) {
+          var end = +el.dataset.count, t0 = null;
+          if (reduce) { el.textContent = end; return; }
+          function step(t) { t0 = t0 || t; var p = Math.min((t - t0) / 1200, 1); el.textContent = Math.round(end * p); if (p < 1) requestAnimationFrame(step); }
+          requestAnimationFrame(step);
+        }
+
+        // Scroll reveal
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            e.target.classList.add("is-in");
+            e.target.querySelectorAll("[data-count]").forEach(count);
+            e.target.querySelectorAll(".timeline").forEach(function (t) { t.classList.add("is-in"); });
+            io.unobserve(e.target);
+          });
+        }, { threshold: 0.12 });
+        document.querySelectorAll(".x-reveal").forEach(function (el) { io.observe(el); });
+
+        // Tilt on project cards
+        function tilt(card) {
+          if (reduce) return;
+          card.addEventListener("pointermove", function (e) {
+            var b = card.getBoundingClientRect();
+            var x = (e.clientX - b.left) / b.width - 0.5, y = (e.clientY - b.top) / b.height - 0.5;
+            card.style.setProperty("--ry", x * 10 + "deg");
+            card.style.setProperty("--rx", -y * 10 + "deg");
+          });
+          card.addEventListener("pointerleave", function () { card.style.setProperty("--rx", "0deg"); card.style.setProperty("--ry", "0deg"); });
+        }
+        document.querySelectorAll(".x-proj").forEach(tilt);
+
+        // Extra GitHub repos
+        var grid = document.getElementById("project-grid");
+        function esc(s) { return String(s || "").replace(/[&<>"']/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]; }); }
+        try {
+          fetch("https://api.github.com/users/yashwantj730-code/repos?sort=updated")
+            .then(function (res) { if (!res.ok) throw 0; return res.json(); })
+            .then(function (repos) {
+              if (!Array.isArray(repos)) return;
+              var shown = Array.prototype.map.call(grid.querySelectorAll("[data-repo]"), function (el) { return el.dataset.repo.toLowerCase(); });
+              repos.forEach(function (repo) {
+                if (!repo || repo.fork || shown.indexOf(String(repo.name).toLowerCase()) > -1) return;
+                var card = document.createElement("article");
+                card.className = "x-proj";
+                card.dataset.repo = repo.name;
+                card.innerHTML = '<div class="x-proj__icon" aria-hidden="true">&lt;/&gt;</div><h3>' + esc(repo.name) + "</h3><p>" + esc(repo.description || "A project on GitHub.") + "</p>" +
+                  (repo.language ? '<ul class="x-tags"><li>' + esc(repo.language) + "</li></ul>" : '<ul class="x-tags"></ul>') +
+                  '<div class="links"><a class="btn" href="' + esc(repo.html_url) + '" target="_blank" rel="noopener">Code</a></div>';
+                grid.appendChild(card);
+                tilt(card);
+              });
+            })
+            .catch(function () {});
+        } catch (e) {}
+
+        // Certificate lightbox
+        var dlg = document.getElementById("cert-dialog");
+        document.getElementById("cert-open").addEventListener("click", function () {
+          if (dlg.showModal) dlg.showModal(); else window.open("certificate.jpg", "_blank");
+        });
+        document.getElementById("cert-close").addEventListener("click", function () { dlg.close(); });
+        dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+
+        // Back to top
+        var top = document.getElementById("to-top");
+        window.addEventListener("scroll", function () { top.classList.toggle("is-show", window.scrollY > 600); }, { passive: true });
+        document.documentElement.style.scrollBehavior = reduce ? "auto" : "smooth";
+
+        // Toast
+        var toast = document.getElementById("toast"), timer;
+        function show(msg, err) {
+          toast.textContent = msg;
+          toast.classList.toggle("is-error", !!err);
+          toast.classList.add("is-show");
+          clearTimeout(timer);
+          timer = setTimeout(function () { toast.classList.remove("is-show"); }, 3500);
+        }
+
+        // Contact form
+        var form = document.getElementById("contact-form");
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var data = { name: form.name.value.trim(), email: form.email.value.trim(), message: form.message.value.trim() };
+          if (!data.name || !data.email || !data.message) { show("Please fill in your name, email and message.", true); return; }
+          if (!API_URL) {
+            window.location.href = "mailto:yashwantj730@gmail.com?subject=" + encodeURIComponent("Portfolio Contact from " + data.name) + "&body=" + encodeURIComponent(data.message);
+            return;
+          }
+          var btn = form.querySelector("button");
+          btn.disabled = true;
+          fetch(API_URL + "/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
+            .then(function (res) { if (!res.ok) throw 0; form.reset(); show("Thanks! Your message was sent."); })
+            .catch(function () { show("Sorry, the message could not be sent. Please email me instead.", true); })
+            .then(function () { btn.disabled = false; });
+        });
+      })();
+    </script>
+  </body>
+</html>
